@@ -11,11 +11,10 @@ const withAuthorization = (authCondition) => (Component) => {
   class WithAuthorization extends React.Component {
     componentDidMount() {
 
-
       firebase.auth().onAuthStateChanged(authUser => {
 
         if(authUser) {
-          
+
         console.log("user log", authUser.uid)
         db.getUserData(authUser.uid).then(function(usr){
           var userLevel = usr.val().level
@@ -32,8 +31,6 @@ const withAuthorization = (authCondition) => (Component) => {
         }
       }
       });
-
-
 
     }
 
