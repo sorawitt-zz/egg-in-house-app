@@ -7,6 +7,9 @@ export const doSignInWithEmailAndPassword = (email, password) =>
 export const doSignInWithFacebook = () => 
     auth.signInWithPopup(fbProvider);
 
+export const getUserCurrent = () =>
+  auth.currentUser.uid
+
 // Sign out
 export const doSignOut = () => {
   auth.signOut();

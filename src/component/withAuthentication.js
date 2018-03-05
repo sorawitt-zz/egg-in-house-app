@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { firebase } from '../firebase';
+import { firebase, db } from '../firebase';
 
 
 const withAuthentication = (Component) => {
@@ -21,10 +21,24 @@ const withAuthentication = (Component) => {
     }
 
     componentDidMount() {
+      var thisa = this
       firebase.auth.onAuthStateChanged(authUser => {
-        authUser
-          ? this.setState(() => ({ authUser }))
-          : this.setState(() => ({ authUser: null }));
+          if(authUser) {
+
+          
+        db.getUserData(authUser.uid).then(function(usr){
+          var userLevel = usr.val().level
+          console.log("user db",usr.val().level)
+          if (userLevel == 'developer'){
+
+        thisa.setState(() => ({ authUser }))
+        
+          }
+        })
+      }else {
+        thisa.setState(() => ({ authUser: null}))
+      }
+
       });
     }
 

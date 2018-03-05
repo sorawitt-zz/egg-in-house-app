@@ -9,7 +9,7 @@ class HomePage extends Component {
       super(props)
 
 
-      
+
       this.state = {
           user: ""
       }
@@ -20,8 +20,8 @@ class HomePage extends Component {
     componentWillMount(){
         console.log("willMount")
         this.getCurrentUser()
-    
-    
+
+
     }
 
 getCurrentUser() {
@@ -53,7 +53,7 @@ render() {
         <img src={userCur.profileUrl} />
       </div>
       </div>
-      
+
   )
 }
 

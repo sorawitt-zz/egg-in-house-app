@@ -31,10 +31,9 @@ class CreateNewAppPage extends Component {
       this.handleSaveDataToDB = this.handleSaveDataToDB.bind(this)
   }
 
-  
-
     componentWillMount(){
         console.log("willMount")
+        
     }
 
     submitForm() {
@@ -75,20 +74,8 @@ class CreateNewAppPage extends Component {
         xw.startElement('key')
         xw.text("metadata")
         xw.endElement()
-    
+
         xw.startElement("dict")
-        xw.startElement("key")
-        xw.text("bundle-identifier")
-        xw.endElement()
-        xw.startElement("string")
-        xw.text(thisS.state.bundleId)  // <--- input bundle id
-        xw.endElement()
-        xw.startElement("key")
-        xw.text("bundle-version")
-        xw.endElement()
-        xw.startElement("string")
-        xw.text(thisS.state.version) // <--- input bundle id
-        xw.endElement()
         xw.startElement("key")
         xw.text("kind")
         xw.endElement()
@@ -109,13 +96,18 @@ class CreateNewAppPage extends Component {
         xw.endElement()
         xw.endDocument();
 
+
+
         var storage = firebase.storage();
         var storageRef = storage.ref();
         var imageRef = storageRef.child(thisS.state.name);
         var spaceRef = imageRef.child('ipa/manifest.plist');
         var file = new Blob([xw.toString()], { type: 'application/octet-stream'});
-    
-console.log("xw", xw.toString())
+        var GoogleURL = require( 'google-url' );
+          var googleUrl = new GoogleURL( { key: 'AIzaSyCUq7yUP6JvRYfVkD5RnUlVrtuZcD9lsPI' });
+
+
+        console.log("xw", xw.toString())
           var x = spaceRef.put(file);
           x.on('state_changed', function(snapshot){
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -124,9 +116,15 @@ console.log("xw", xw.toString())
             // Handle unsuccessful uploads
           }, function() {
             var downloadURL = x.snapshot.downloadURL;
-            thisS.setState({
-              appFile: downloadURL
-            })
+            googleUrl.shorten( downloadURL, function( err, shortUrl ) {
+              // shortUrl should be http://goo.gl/BzpZ54
+              console.log("url", shortUrl)
+              thisS.setState({
+                appFile: shortUrl
+              })
+            } );
+
+
             console.log("download", downloadURL)
           });
 
@@ -137,7 +135,7 @@ console.log("xw", xw.toString())
 
     }
 
-  
+
 
     handleNameChange(e){
       this.setState({
@@ -187,7 +185,7 @@ console.log("xw", xw.toString())
         })
         console.log("download", downloadURL)
       });
-      
+
     }
 
     handleAddIcon(e) {
@@ -195,7 +193,7 @@ console.log("xw", xw.toString())
       var thisS = this
       // let reader = new FileReader();
       let file = e.target.files[0];
-  
+
       // reader.onloadend = () => {
       //   thisS.setState({
       //     iconFile: file,
@@ -232,10 +230,10 @@ console.log("xw", xw.toString())
           })
           console.log("download", downloadURL)
         });
-  
-      
+
+
     }
-    
+
 
     render() {
       let {imagePreviewUrl} = this.state;
@@ -243,67 +241,67 @@ console.log("xw", xw.toString())
         <div>
           <h1>CreateNewAppPage</h1>
           <div>
-        
+
         <div className="card-group" style={{width : '96px', height : '96px'}}>
   <img className="card-img-top" src={imagePreviewUrl}/>
 </div>
 
-        <SingleInput 
-      
+        <SingleInput
+
           inputType={'text'}
           title={'Full name'}
           name={'name'}
           controlFunc={this.handleNameChange}
-          placeholder={'Type first and last name here'} 
+          placeholder={'Type first and last name here'}
         />
 
-        <SingleInput 
-        
+        <SingleInput
+
           inputType={'text'}
           title={'version'}
           name={'version'}
           controlFunc={this.handleVersionChange}
-          placeholder={'Type first and last name here'} 
+          placeholder={'Type first and last name here'}
         />
 
-        
-      <SingleInput 
-        
+
+      <SingleInput
+
         inputType={'text'}
         title={'build'}
         name={'build'}
         controlFunc={this.handleBuildChange}
-        placeholder={'Type first and last name here'} 
+        placeholder={'Type first and last name here'}
       />
 
-      
-<SingleInput 
-        
+
+<SingleInput
+
         inputType={'text'}
         title={'bundleId'}
         name={'bundleId'}
         controlFunc={this.handleBundleIdChange}
-        placeholder={'Type first and last name here'} 
+        placeholder={'Type first and last name here'}
       />
-          <SingleInput 
+          <SingleInput
         inputType={'file'}
         title={'icon'}
         name={'icon'}
         controlFunc={this.handleAddIcon}
-        placeholder={'Type first and last name here'} 
+        placeholder={'Type first and last name here'}
       />
 
-<SingleInput 
+<SingleInput
         inputType={'file'}
         title={'.ipa file'}
         name={'fileApp'}
         controlFunc={this.handleIpaFile}
-        placeholder={'Type first and last name here'} 
+        placeholder={'Type first and last name here'}
       />
           <button className="btn btn-primary" onClick={this.submitForm}>Submit form</button>
 
 
-        
+
         </div>
         </div>
       )
