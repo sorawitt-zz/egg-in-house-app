@@ -12,8 +12,10 @@ export const getUserData = (uid) =>
   db.ref(`Users/${uid}`).once('value')
 
 
+  export const getApplication = () => 
+  db.ref('Applications').once('value')
 
 export const onceGetUsers = (uid) =>
-  db.ref(`Users/${uid}`).once('value');
+  db.ref(`Users/${uid}`).once('value')
 
 // Other Entity APIs ...

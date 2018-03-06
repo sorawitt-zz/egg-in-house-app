@@ -14,7 +14,9 @@ class SingleInput extends React.Component {
         name={this.props.name}
         type={this.props.inputType}
         onChange={this.props.controlFunc}
-        placeholder={this.props.placeholder} />
+        placeholder={this.props.placeholder} 
+        required={this.props.required}
+        />
     </div>
     )
   }
@@ -27,9 +29,9 @@ SingleInput.propTypes = {
   inputType: PropTypes.oneOf(['text', 'file']).isRequired,
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  controlFunc: PropTypes.func.isRequired,
+  controlFunc: PropTypes.func,
   placeholder: PropTypes.string,
-  refer: PropTypes.string
+  required: PropTypes.string.isRequired
 };
 
 export default SingleInput;  

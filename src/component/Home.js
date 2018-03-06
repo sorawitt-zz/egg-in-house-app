@@ -24,6 +24,13 @@ class HomePage extends Component {
 
     }
 
+    componentDidMount(){
+        console.log("didMount")
+        this.getCurrentUser()
+
+
+    }
+
 getCurrentUser() {
     var thisUser = this
     var user = firebase.auth().currentUser;
