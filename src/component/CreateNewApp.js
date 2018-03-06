@@ -161,16 +161,11 @@ class CreateNewAppPage extends Component {
   submitForm(event) {
     var thisS = this
     console.log("touch")
-    thisS.setState({
-      success: true
-    })
-    //var fileIpaRaw  = thisS.state.fileIpa
-    // thisS.setState({
-    //   downloadState: 50
-    // })
-    // this.saveIpaFileToStorage();
-    // //this.handleIpaFile
-    // // console.log(JSON.stringify(thiss.state))
+
+
+    this.saveIpaFileToStorage();
+    //this.handleIpaFile
+    // console.log(JSON.stringify(thiss.state))
 
     event.preventDefault();
   }
@@ -199,6 +194,9 @@ class CreateNewAppPage extends Component {
       download: 0,
       build: thisS.state.build,
       bundleId: thisS.state.bundleId
+    })
+    thisS.setState({
+      success: true
     })
 
   }
@@ -311,12 +309,12 @@ class CreateNewAppPage extends Component {
 
   render() {
     let {imagePreviewUrl} = this.state;
-    if(this.state.success) {
-      return(
+    // if(this.state.success) {
+    //   return(
 
-    <Redirect to={LIST_APP}/>
-      )
-    }
+    // <Redirect to={LIST_APP}/>
+    //   )
+    // }
     return(
       <div>
         <h1>CreateNewAppPage</h1>

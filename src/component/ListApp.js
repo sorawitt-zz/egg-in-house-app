@@ -2,15 +2,7 @@ import React from 'react';
 import withAuthorization from './withAuthorization';
 import LaunchModal from './LaunchModal'
 import { db } from '../firebase'
-
-
-// const ListAppPage = () =>
-//   <div>
-//       <LaunchModal
-//       title={'Upload process'}
-//       msg={'Success!'}
-//       />
-//   </div>
+import UpdateAppModel from './UpdateAppModel';
 
 class ListAppPage extends React.Component {
   constructor(props) {
@@ -33,28 +25,23 @@ class ListAppPage extends React.Component {
     db.getApplication().then(function (snapshot) {
       console.log("data", snapshot.val())
 
-
-
-      // let message = { item: snapshot.val(), id: snapshot.key };
-
-      // thisS.setState({ messages: [message].concat(thisS.state.messages) });
-
       const data = snapshot.val()
       if (data !== null) {
         Object.keys(data).forEach(key => {
           console.log(data[key].name);
-          // thisS.setState({
-          //   messages: newArr
-          // })
           let itemApp = { iconApp: data[key].appIconUrl, appId: key };
           thisS.setState({ applicationItems: [itemApp].concat(thisS.state.applicationItems) });
         });
       }
-      //     console.log("log items")
-
     console.log("log data item", thisS.state.applicationItems)
 
     })
+  }
+
+  handleEdit = (e) => {
+    var thiss = this
+    console.log("name app", e.target.value)
+    
   }
 
   render() {
@@ -79,17 +66,13 @@ class ListAppPage extends React.Component {
         <tr key={item.appId}>
         <td><img src={item.iconApp} alt={item.iconApp} width="32px"/></td>
          <td>{item.appId}</td>
-         
+         <td><button value={item.appId} onClick={this.handleEdit}> </button></td>
          </tr>
       ))}
       
     </tbody>
   </table>
 </div>
-
-    //   <ul>
-
-    //  </ul>
     )
   }
 

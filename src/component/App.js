@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
@@ -9,6 +9,7 @@ import SignInPage from './SignIn'
 import HomePage from './Home'
 import CreateNewAppPage from './CreateNewApp'
 import ListAppPage from './ListApp'
+import UpdateAppModel from './UpdateAppModel'
 
 import * as routes from '../constants/routes'
 import ListApp from './ListApp';
@@ -21,14 +22,15 @@ import withAuthentication from './withAuthentication';
 const App = () =>
   <Router>
     <div>
-    <Navigation/>
-      <hr/>
-        <Route exact path={routes.SIGN_IN} component={() => <SignInPage/> } />
-        <Route exact path={routes.HOME} component={() => <HomePage/> } />
-        <Route exact path={routes.LIST_APP} component={() => <ListAppPage/> } />
-        <Route exact path={routes.CREATE_NEW_APP} component={() => <CreateNewAppPage/> } />
-      </div>
-    </Router>
+      <Navigation />
+      <hr />
+      <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
+      <Route exact path={routes.HOME} component={() => <HomePage />} />
+      <Route exact path={routes.LIST_APP} component={() => <ListAppPage />} />
+      <Route exact path={routes.CREATE_NEW_APP} component={() => <CreateNewAppPage />} />
+      <Route exact path={routes.UPDATE_APP} component={() => <UpdateAppModel />} />
+    </div>
+  </Router>
 export default withAuthentication(App);
 
 // class App extends Component {
